@@ -4,7 +4,7 @@ import turicreate as tc
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def hello():
     
     data = tc.SFrame({'user_id': ["Ann", "Ann", "Ann", "Brian", "Brian", "Brian"],
