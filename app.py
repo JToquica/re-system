@@ -11,7 +11,7 @@ def recomendaciones():
         json_data = request.json
 
         data = tc.SFrame({'user_id': json_data["users"],
-              	'place_id': json_data["places"],
+              	'item_id': json_data["places"],
               	'rating': json_data["ratings"]})
 
         m = tc.factorization_recommender.create(data, target='rating')
@@ -21,7 +21,7 @@ def recomendaciones():
         datos = []
         
         for i in recommendations:
-                datos.append(i["place_id"])
+                datos.append(i["item_id"])
 
         return {"data":datos}   
 
