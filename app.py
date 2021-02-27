@@ -6,29 +6,24 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/recomendaciones', methods=['POST'])
-def hello_world_json_list():
+def recomendaciones():
 
         json_data = request.json
 
-        calificacion = {'user_id': ["Ann", "Ann", "Ann", "Brian", "Brian", "Brian"],
-                        'item_id': ["Item1", "Item2", "Item4", "Item2", "Item3", "Item5"],
-                        'rating': [1, 3, 2, 5, 4, 2]}
-
-        data = tc.SFrame(calificacion)
+        data = tc.SFrame({'user_id': json_data["users"],
+              	'place_id': json_data["places"],
+              	'rating': json_data["ratings"]})
 
         m = tc.factorization_recommender.create(data, target='rating')
 
-        recommendations = m.recommend(users=['Brian'])
+        recommendations = m.recommend([json_data["user"]])
 
         datos = []
-
+        
         for i in recommendations:
-                datos.append(i)
+                datos.append(i["place_id"])
 
-        #return {"data":datos}
-        return {"data":json_data}
-    
-    
+        return {"data":datos}   
 
 if __name__ == '__main__':
     app.run
